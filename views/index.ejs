@@ -51,18 +51,22 @@
         <input onclick="deletebis(), actu()" type="submit" value="Submit deletebis" />
       </form>
      
-      <p id="insert"></p>
+      <div id="insert"></div>
     </div>
 
 
     <script>
+    $(document).ready(function()
+{
+ 
+});
       function actu() {
         $("#insert").empty();
         $.getJSON('/todo', function (data) {
           console.log(data);
           for (var i = 0; i < data.length; i++) {
 
-            $("#insert").append("id :  " + data[i].id + " " + data[i].name + "                 " + "   <br>                      date :  " + data[i].date + " " + "<br>");
+            $("#insert").append("<button>  modifier</button><button>  supprimer</button><p class='note'> id :  " + data[i].id + " " + data[i].name + "                 " + "   <br>                      date :  " + data[i].date + " " + "<br></p>");
           };
 
 
