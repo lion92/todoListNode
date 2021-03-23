@@ -40,15 +40,15 @@
     <div class="container">
       <form id="update" method="POST" action="/" target="hiddenFrame">
         <label for="name">Note à entrer</label>
-        <input type="text" name="name" />
+        <input id='prisedenote' type="text" name="name" />
 
-        <input onclick="update(), actu()" type="submit" value="Submit update" />
+        <input id='UpdateInput' onclick="update(), actu()" type="submit" value="Submit update" />
       </form>
     </div>
     <div class="container">
       <form id="delete" method="POST" action="/" target="hiddenFrame">
 
-        <input onclick="deletebis(), actu()" type="submit" value="Submit deletebis" />
+        <input id='deleteInput' onclick="deletebis(), actu()" type="submit" value="Submit deletebis" />
       </form>
      
       <div id="insert"></div>
@@ -56,9 +56,27 @@
 
 
     <script>
+
+function submitdelete(){
+  $("#deleteInput").click();
+
+}
+function submitmodifier(){
+  $("#UpdateInput").click();
+  $('#prisedenote').val('');
+}
     $(document).ready(function()
 {
  
+$(this).click(function(event) {
+      var traitement=event.target.innerHTML;
+      
+      for (var i=0; i<traitement.split(' ').length;i++){
+        if(!isNaN(traitement.split(' ')[4]))
+         $('#id').empty().val(traitement.split(' ')[4]);
+         
+      }
+            });
 });
       function actu() {
         $("#insert").empty();
@@ -66,7 +84,7 @@
           console.log(data);
           for (var i = 0; i < data.length; i++) {
 
-            $("#insert").append("<button>  modifier</button><button>  supprimer</button><p class='note'> id :  " + data[i].id + " " + data[i].name + "                 " + "   <br>                      date :  " + data[i].date + " " + "<br></p>");
+            $("#insert").append("<button onclick='submitmodifier()'>  modifier</button><button onclick='submitdelete()'>  supprimer</button><p class='note'> id :  " + data[i].id + " " + data[i].name + "                 " + "   <br>                      date :  " + data[i].date + " " + "<br></p>");
           };
 
 
@@ -75,7 +93,7 @@
 
 
         });
-
+      
       }
       $(document).ready(function () {
         actu();
@@ -92,7 +110,7 @@ $.ajax({
        data: form.serialize(), // serializes the form's elements.
        success: function(data)
        {
-        actu();
+        actu();  $('#name').val('');
         ///   alert(data); // show response from the php script.
        }
      });
